@@ -45,7 +45,7 @@ public class Jogo {
 		int p1Y = 0;
 		int p2X = 0;
 		int p2Y = 0;
-		List<Celula> elementosTrinca = new ArrayList<>();
+		List<Celula> elementosTrinca = null;
 		
 		do {
 			boolean validaMovimento = true;
@@ -158,8 +158,46 @@ public class Jogo {
 			System.out.println("Erro de movimentação de peças: Bola de destino não pode estar preenchida. ");
 			return false;
 		}
-
+		if(!existeCaminho(p1X, p1Y, p2X, p2Y)) {
+			System.out.println("Erro de movimentação de peças: Não existe caminho disponível entre a origem e o destino. ");
+			return false;
+		}
 		return true;
+	}
+	
+	private boolean existeCaminho(int p1X, int p1Y, int p2X, int p2Y) {
+		boolean existeCaminho = false;
+		String[][] celulas = new String[matrizBolas.length][matrizBolas.length];
+		Celula celula = null; 
+		for (int i = 0; i < matrizBolas.length; i++) {
+			for (int j = 0; j < matrizBolas[i].length; j++) {
+				celula = matrizBolas[i][j];
+				
+				if( Cores.AZU.equals(celula.getTexto()) || 
+					Cores.AMA.equals(celula.getTexto()) || 
+					Cores.CIA.equals(celula.getTexto()) ||
+					Cores.LAR.equals(celula.getTexto()) ||
+					Cores.VDE.equals(celula.getTexto()) || 
+					Cores.VME.equals(celula.getTexto()) ){
+					
+					celulas[i][j] = Navegacao.OCUPADO;
+				}
+				else if(matrizBolas[i][j].getTexto().equals(TEXTO_CELULA_VAZIA)) {
+					celulas[i][j] = Navegacao.LIVRE;
+				}
+				else if(i == p1X && j == p1Y) {
+					celulas[i][j] = Navegacao.ORIGEM;
+				}
+				else if(i == p2X && j == p2Y) {
+					celulas[i][j] = Navegacao.DESTINO;
+				}
+			}
+		}
+		Navegacao navegacao = new Navegacao();
+		if(navegacao.existeCaminho(celulas)) {
+			existeCaminho = true;
+		}
+		return existeCaminho;
 	}
 	
 	private boolean bolaOrigemVazia(int i, int j, int p1X, int p1Y, int p2X, int p2Y) {
