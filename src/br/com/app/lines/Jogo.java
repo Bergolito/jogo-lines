@@ -164,35 +164,32 @@ public class Jogo {
 		}
 		return true;
 	}
-	
+
 	private boolean existeCaminho(int p1X, int p1Y, int p2X, int p2Y) {
 		boolean existeCaminho = false;
 		String[][] celulas = new String[matrizBolas.length][matrizBolas.length];
 		Celula celula = null; 
+		String corBola = null;
+		
 		for (int i = 0; i < matrizBolas.length; i++) {
-			for (int j = 0; j < matrizBolas[i].length; j++) {
+			for (int j = 0; j < matrizBolas.length; j++) {
 				celula = matrizBolas[i][j];
+				corBola = celula.getTexto();
 				
-				if( Cores.AZU.equals(celula.getTexto()) || 
-					Cores.AMA.equals(celula.getTexto()) || 
-					Cores.CIA.equals(celula.getTexto()) ||
-					Cores.LAR.equals(celula.getTexto()) ||
-					Cores.VDE.equals(celula.getTexto()) || 
-					Cores.VME.equals(celula.getTexto()) ){
+				if( Cores.AZU.getCodigo().equals(corBola) || Cores.AMA.getCodigo().equals(corBola) || 
+					Cores.CIA.getCodigo().equals(corBola) || Cores.LAR.getCodigo().equals(corBola) ||
+					Cores.VDE.getCodigo().equals(corBola) || Cores.VME.getCodigo().equals(corBola) ){
 					
 					celulas[i][j] = Navegacao.OCUPADO;
 				}
 				else if(matrizBolas[i][j].getTexto().equals(TEXTO_CELULA_VAZIA)) {
 					celulas[i][j] = Navegacao.LIVRE;
 				}
-				else if(i == p1X && j == p1Y) {
-					celulas[i][j] = Navegacao.ORIGEM;
-				}
-				else if(i == p2X && j == p2Y) {
-					celulas[i][j] = Navegacao.DESTINO;
-				}
 			}
 		}
+		celulas[p1X][p1Y] = Navegacao.ORIGEM;
+		celulas[p2X][p2Y] = Navegacao.DESTINO;
+		
 		Navegacao navegacao = new Navegacao();
 		if(navegacao.existeCaminho(celulas)) {
 			existeCaminho = true;

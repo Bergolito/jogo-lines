@@ -45,7 +45,7 @@ public class Navegacao {
 				
 				// if matrix[i][j] is source
 				// and it is not visited
-				if (matrix[i][j].equals(ORIGEM) && !visited[i][j]) {
+				if (null != matrix[i][j] && matrix[i][j].equals(ORIGEM) && !visited[i][j]) {
 					
 					// starting from i, j and then finding the path
 					if (isPath(matrix, i, j, visited)) {
@@ -58,20 +58,12 @@ public class Navegacao {
 
 		if (flag) {
 			isPath = true;
-			System.out.println("[OK] Achou o caminho!!!");
+			System.out.println("[Caminho OK]");
 		}			
 		else {
 			System.out.println("NAO Achou o caminho!!!");
 			isPath = false;
 		}
-
-		imprimeMatriz(visited);
-
-		if (flag) {
-			for (int i = caminho.size()-1; i > 0; i--) {
-				System.out.print(caminho.get(i));
-			}
-		}			
 		
 		return isPath;
 	}
