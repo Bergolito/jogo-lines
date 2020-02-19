@@ -11,16 +11,24 @@ public class JogoTest {
 		testaMatriz03();
 		//
 		testaMatriz04();
+		//
+		testaMatriz05();
 	}
 	
 	public static void testaMatriz01() {
 		Celula[][] matriz = matrizTeste01();
 		int trinca = 3;
 		Jogo jogoLines = new Jogo(matriz.length, matriz.length, trinca);
-		boolean existeTrinca = jogoLines.verificaTrinca(matriz).size() >= trinca; 
-		System.out.println("Existe trinca? "+existeTrinca);
-		for (int i = 0; i < jogoLines.verificaTrinca(matriz).size(); i++) {
-			System.out.print(" "+jogoLines.verificaTrinca(matriz).get(i));
+
+		boolean existeTrinca = jogoLines.existeTrinca(jogoLines.retornaElementosTrinca(matriz));
+		System.out.println();
+		System.out.print("matrizTeste01()::Existe trinca? "+existeTrinca);
+		if(existeTrinca) {
+			System.out.print(" [");
+			for (Celula celula : jogoLines.retornaElementosTrinca(matriz)) {
+				System.out.print(" "+celula.getTexto());
+			}
+			System.out.print(" ] \n");
 		}
 	}
 
@@ -28,10 +36,14 @@ public class JogoTest {
 		Celula[][] matriz = matrizTeste02();
 		int trinca = 3;
 		Jogo jogoLines = new Jogo(matriz.length, matriz.length, trinca);
-		boolean existeTrinca = jogoLines.verificaTrinca(matriz).size() >= trinca; 
-		System.out.println(" Existe trinca? "+existeTrinca);
-		for (int i = 0; i < jogoLines.verificaTrinca(matriz).size(); i++) {
-			System.out.print(" "+jogoLines.verificaTrinca(matriz).get(i));
+		boolean existeTrinca = jogoLines.existeTrinca(jogoLines.retornaElementosTrinca(matriz)); 
+		System.out.print("matrizTeste02()::Existe trinca? "+existeTrinca);
+		if(existeTrinca) {
+			System.out.print(" [");
+			for (Celula celula : jogoLines.retornaElementosTrinca(matriz)) {
+				System.out.print(" "+celula.getTexto());
+			}
+			System.out.print(" ] \n");
 		}
 	}
 
@@ -39,10 +51,14 @@ public class JogoTest {
 		Celula[][] matriz = matrizTeste03();
 		int trinca = 3;
 		Jogo jogoLines = new Jogo(matriz.length, matriz.length, trinca);
-		boolean existeTrinca = jogoLines.verificaTrinca(matriz).size() >= trinca; 
-		System.out.println(" Existe trinca? "+existeTrinca);
-		for (int i = 0; i < jogoLines.verificaTrinca(matriz).size(); i++) {
-			System.out.print(" "+jogoLines.verificaTrinca(matriz).get(i));
+		boolean existeTrinca = jogoLines.existeTrinca(jogoLines.retornaElementosTrinca(matriz)); 
+		System.out.print("matrizTeste03()::Existe trinca? "+existeTrinca);
+		if(existeTrinca) {
+			System.out.print(" [");
+			for (Celula celula : jogoLines.retornaElementosTrinca(matriz)) {
+				System.out.print(" "+celula.getTexto());
+			}
+			System.out.print(" ] \n");
 		}
 	}
 
@@ -50,15 +66,34 @@ public class JogoTest {
 		Celula[][] matriz = matrizTeste04();
 		int trinca = 3;
 		Jogo jogoLines = new Jogo(matriz.length, matriz.length, trinca);
-		boolean existeTrinca = jogoLines.verificaTrinca(matriz).size() >= trinca; 
-		System.out.println(" Existe trinca? "+existeTrinca);
-		for (int i = 0; i < jogoLines.verificaTrinca(matriz).size(); i++) {
-			System.out.print(" "+jogoLines.verificaTrinca(matriz).get(i));
+		boolean existeTrinca = jogoLines.existeTrinca(jogoLines.retornaElementosTrinca(matriz)); 
+		System.out.print("matrizTeste04()::Existe trinca? "+existeTrinca);
+		if(existeTrinca) {
+			System.out.print(" [");
+			for (Celula celula : jogoLines.retornaElementosTrinca(matriz)) {
+				System.out.print(" "+celula.getTexto());
+			}
+			System.out.print(" ] \n");
+		}
+	}
+
+	public static void testaMatriz05() {
+		Celula[][] matriz = matrizTeste05();
+		int trinca = 3;
+		Jogo jogoLines = new Jogo(matriz.length, matriz.length, trinca);
+		boolean existeTrinca = jogoLines.existeTrinca(jogoLines.retornaElementosTrinca(matriz)); 
+		System.out.print("matrizTeste05()::Existe trinca? "+existeTrinca);
+		if(existeTrinca) {
+			System.out.print(" [");
+			for (Celula celula : jogoLines.retornaElementosTrinca(matriz)) {
+				System.out.print(" "+celula.getTexto());
+			}
+			System.out.print(" ] \n");
 		}
 	}
 	
 	/**
-	[ LA LA LA 00 ]
+	[ 00 LA LA LA ]
 	[ RS 00 00 00 ]
 	[ AM VM 00 00 ]
 	[ 00 00 RX VM ]
@@ -66,10 +101,10 @@ public class JogoTest {
 	public static Celula[][] matrizTeste01() {
 		Celula[][] matriz1 = new Celula[4][4];
 		//[ VD 00 00 LA LA 00 ]
-		matriz1[0][0] = new Celula(0, 0, null, "LA");
+		matriz1[0][0] = new Celula(0, 0, null, "00");
 		matriz1[0][1] = new Celula(0, 1, null, "LA");
 		matriz1[0][2] = new Celula(0, 2, null, "LA");
-		matriz1[0][3] = new Celula(0, 3, null, "00");
+		matriz1[0][3] = new Celula(0, 3, null, "LA");
 		//[ RS 00 00 00 00 00 ]
 		matriz1[1][0] = new Celula(1, 0, null, "RS");
 		matriz1[1][1] = new Celula(1, 1, null, "00");
@@ -90,10 +125,10 @@ public class JogoTest {
 	}
 
 	/**
-	[ LA AZ LA 00 ]
+	[ LA AZ LA VM ]
 	[ RS 00 VD VM ]
 	[ AM 00 00 VM ]
-	[ 00 00 RX VM ]
+	[ 00 00 RX 00 ]
 	 */
 	public static Celula[][] matrizTeste02() {
 		Celula[][] matriz1 = new Celula[4][4];
@@ -101,7 +136,7 @@ public class JogoTest {
 		matriz1[0][0] = new Celula(0, 0, null, "LA");
 		matriz1[0][1] = new Celula(0, 1, null, "AZ");
 		matriz1[0][2] = new Celula(0, 2, null, "LA");
-		matriz1[0][3] = new Celula(0, 3, null, "00");
+		matriz1[0][3] = new Celula(0, 3, null, "VM");
 		//[ RS 00 VD VM ]
 		matriz1[1][0] = new Celula(1, 0, null, "RS");
 		matriz1[1][1] = new Celula(1, 1, null, "00");
@@ -116,7 +151,7 @@ public class JogoTest {
 		matriz1[3][0] = new Celula(3, 0, null, "00");
 		matriz1[3][1] = new Celula(3, 1, null, "00");
 		matriz1[3][2] = new Celula(3, 2, null, "RX");
-		matriz1[3][3] = new Celula(3, 3, null, "VM");
+		matriz1[3][3] = new Celula(3, 3, null, "00");
 		
 		return matriz1;
 	}
@@ -174,6 +209,38 @@ public class JogoTest {
 		//[ AM AZ 00 RX ]
 		matriz1[2][0] = new Celula(2, 0, null, "AM");
 		matriz1[2][1] = new Celula(2, 1, null, "AZ");
+		matriz1[2][2] = new Celula(2, 2, null, "00");
+		matriz1[2][3] = new Celula(2, 3, null, "RX");
+		//[ AZ 00 RX 00 ]
+		matriz1[3][0] = new Celula(3, 0, null, "AZ");
+		matriz1[3][1] = new Celula(3, 1, null, "00");
+		matriz1[3][2] = new Celula(3, 2, null, "RX");
+		matriz1[3][3] = new Celula(3, 3, null, "00");
+		
+		return matriz1;
+	}
+
+	/**
+	[ LA VD 00 AZ ]
+	[ 00 00 00 00 ]
+	[ AM 00 00 RX ]
+	[ AZ 00 RX 00 ]
+	 */
+	public static Celula[][] matrizTeste05() {
+		Celula[][] matriz1 = new Celula[4][4];
+		//[ LA VD 00 AZ ]
+		matriz1[0][0] = new Celula(0, 0, null, "LA");
+		matriz1[0][1] = new Celula(0, 1, null, "VD");
+		matriz1[0][2] = new Celula(0, 2, null, "00");
+		matriz1[0][3] = new Celula(0, 3, null, "AZ");
+		//[ 00 00 AZ 00 ]
+		matriz1[1][0] = new Celula(1, 0, null, "00");
+		matriz1[1][1] = new Celula(1, 1, null, "00");
+		matriz1[1][2] = new Celula(1, 2, null, "00");
+		matriz1[1][3] = new Celula(1, 3, null, "00");
+		//[ AM AZ 00 RX ]
+		matriz1[2][0] = new Celula(2, 0, null, "AM");
+		matriz1[2][1] = new Celula(2, 1, null, "00");
 		matriz1[2][2] = new Celula(2, 2, null, "00");
 		matriz1[2][3] = new Celula(2, 3, null, "RX");
 		//[ AZ 00 RX 00 ]
